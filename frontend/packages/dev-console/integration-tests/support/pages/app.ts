@@ -2,9 +2,10 @@ import { detailsPage } from '@console/cypress-integration-tests/views/details-pa
 import { nav } from '@console/cypress-integration-tests/views/nav';
 import { modal } from '@console/cypress-integration-tests/views/modal';
 import { guidedTour } from '@console/cypress-integration-tests/views/guided-tour';
-import { devNavigationMenu, switchPerspective, pageTitle } from '../constants';
-import { devNavigationMenuPO, formPO, gitPO, yamlPO } from '../pageObjects';
+import { devNavigationMenu, adminNavigationBar, switchPerspective, pageTitle } from '../constants';
+import { devNavigationMenuPO, adminNavigationMenuPO, formPO, gitPO, yamlPO } from '../pageObjects';
 import * as yamlView from '../../../../integration-tests-cypress/views/yaml-editor';
+
 
 export const app = {
   waitForDocumentLoad: () => {
@@ -233,4 +234,16 @@ export const yamlEditor = {
       yamlView.setEditorContent(str);
     });
   },
+};
+
+export const navigateToAdminMenu = (opt: adminNavigationBar) => {
+  switch (opt) {
+    case adminNavigationBar.Home: {
+      cy.get(adminNavigationMenuPO.home.main).click();
+      break;
+    }
+    default: {
+      throw new Error('Option is not available');
+    }
+  }
 };
