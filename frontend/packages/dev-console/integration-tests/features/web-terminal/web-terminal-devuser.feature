@@ -7,9 +7,9 @@ Feature: Web Terminal for Developer user
               # for correct checking of the user story we can use just an one project with active terminal
               # we use 2 different namespace (projects) for avoiding conflicts
               # 1. `aut-terminal-testuser` for creation, starting and removing DevWorkspace
-              # 2. `aut-terminal-testuser-existed2` for creation DevWorkspace in existed project
+              # 2. `aut-terminal-testuser-existed1` for creation DevWorkspace in existed project
               # in existed project
-              And user has created or selected namespace "aut-terminal-testuser-existed"
+              And user has created or selected namespace "aut-terminal-testuser-existed1"
               And user has installed Web Terminal operator
 
         @regression @to-do
@@ -26,5 +26,5 @@ Feature: Web Terminal for Developer user
         Scenario: Open Web Terminal for existing project WT-03-TC02
             Given user can see terminal icon on masthead
              When user clicks on the Web Terminal icon on the Masthead
-              And user selects "aut-terminal-testuser-existed" from Project drop down menu
-             Then user will see the terminal instance for developer namespace "aut-terminal-testuser-existed"
+              And user selects "aut-terminal-testuser-existed1" from Project drop down menu
+             Then user will see the terminal instance for developer namespace "aut-terminal-testuser-existed1"

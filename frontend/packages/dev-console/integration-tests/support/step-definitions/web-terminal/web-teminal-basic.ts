@@ -9,7 +9,6 @@ And('user close current Web Terminal session', () => {
 });
 Then('user will see the terminal window opened in new tab', () => {
   webTerminalPage.verifyOpenningInNewTabAttrButton();
-  webTerminalPage.closeCurrentTerminalSession();
 });
 
 When('user does nothing with displayed terminal window 15 minutes', () => {

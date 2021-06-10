@@ -23,7 +23,7 @@ export const webTerminalPage = {
       .should('equal', '_blank');
   },
   verifyInnactivityMessage: (timeout: number) => {
-    cy.get(webTerminalPO.terminalInnactivityMessageArea, { timeout: timeout }).should(
+    cy.get(webTerminalPO.terminalInnactivityMessageArea, { timeout }).should(
       'contain.text',
       messages.inactivityMessage,
     );

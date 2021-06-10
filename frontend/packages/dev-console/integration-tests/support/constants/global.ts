@@ -16,15 +16,15 @@ export enum devNavigationMenu {
 
 export enum adminNavigationBar {
   Home = 'Home',
-  //TODO  Operators
-  //TODO  Workloads
-  //TODO  Networking
-  //TODO  Storage
-  //TODO  Builds
-  //TODO  Monitoring
-  //TODO  Compute
-  //TODO  User Management
-  //TODO  Administration
+  // TODO  Operators
+  // TODO  Workloads
+  // TODO  Networking
+  // TODO  Storage
+  // TODO  Builds
+  // TODO  Monitoring
+  // TODO  Compute
+  // TODO  User Management
+  // TODO  Administration
 }
 
 export enum switchPerspective {

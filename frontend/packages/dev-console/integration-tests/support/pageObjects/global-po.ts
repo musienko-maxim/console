@@ -16,16 +16,16 @@ export const devNavigationMenuPO = {
 };
 
 export const adminNavigationMenuPO = {
-  home: { main: '[data-quickstart-id="qs-nav-home"]', search: 'a[href=\'/search\']' },
-  //TODO  Operators
-  //TODO  Workloads
-  //TODO  Networking
-  //TODO  Storage
-  //TODO  Builds
-  //TODO  Monitoring
-  //TODO  Compute
-  //TODO  User Management
-  //TODO  Administration
+  home: { main: '[data-quickstart-id="qs-nav-home"]', search: "a[href='/search']" },
+  // TODO  Operators
+  // TODO  Workloads
+  // TODO  Networking
+  // TODO  Storage
+  // TODO  Builds
+  // TODO  Monitoring
+  // TODO  Compute
+  // TODO  User Management
+  // TODO  Administration
 };
 
 export const createSourceSecret = {

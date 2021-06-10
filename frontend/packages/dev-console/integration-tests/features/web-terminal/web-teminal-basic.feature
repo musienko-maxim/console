@@ -4,7 +4,7 @@ Feature: Web Terminal
 
         Background:
             Given user has logged in as basic user
-              And  user has created or selected namespace "aut-terminal-basic"
+              And user has created or selected namespace "aut-terminal-basic2"
 
         @regression @to-do
         Scenario: Open existing Web Terminal instance: WT-01-TC01

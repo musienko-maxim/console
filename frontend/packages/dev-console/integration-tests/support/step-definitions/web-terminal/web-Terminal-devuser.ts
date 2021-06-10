@@ -1,9 +1,19 @@
-import { When, Then } from 'cypress-cucumber-preprocessor/steps';
+import { When, Then, Given } from 'cypress-cucumber-preprocessor/steps';
 import { initTerminalPage } from '../../pages/web-terminal/initTerminal-page';
 import { searchResource } from '../../pages/search-resources/search-page';
 import { devWorkspacePage } from '../../pages/devworspace/devworkspacePage';
-import { devWorkspaceStatuses } from '../../constants';
-import { projectNameSpace } from '../../pages';
+import { devWorkspaceStatuses, switchPerspective } from '../../constants';
+import { projectNameSpace, perspective } from '../../pages';
+
+import { guidedTour } from '../../../../../integration-tests-cypress/views/guided-tour';
+
+Given('user has logged in as dev user', () => {
+  // temporary solution for login as developer user
+  cy.logout();
+  cy.login('htpasswd', Cypress.env('DEV_USER_NAME'), Cypress.env('DEV_USER_PASSSWORD'));
+  perspective.switchTo(switchPerspective.Developer);
+  guidedTour.close();
+});
 
 When('user selects Create Project from Project drop down menu', () => {
   initTerminalPage.clickOnProjectDropDawn();
@@ -17,13 +27,16 @@ When('user enters project name {string}', (projectName: string) => {
 When('user clicks on Submit button', () => {
   initTerminalPage.clickStartButton();
 });
-Then('user will see the terminal instance for developer namespace {string}', (nameSpace: string) => {
-  projectNameSpace.selectProject(nameSpace);
-  searchResource.searchResourceByNameAsDev('DevWorkspace');
-  searchResource.selectSearchedItem('terminal');
-  devWorkspacePage.verifyDevWsResourceStatus(devWorkspaceStatuses.running);
-  cy.exec(`oc delete namespace ${nameSpace}`, { failOnNonZeroExit: true });
-});
+Then(
+  'user will see the terminal instance for developer namespace {string}',
+  (nameSpace: string) => {
+    projectNameSpace.selectProject(nameSpace);
+    searchResource.searchResourceByNameAsAdmin('DevWorkspace');
+    searchResource.selectSearchedItem('terminal');
+    devWorkspacePage.verifyDevWsResourceStatus(devWorkspaceStatuses.running);
+    cy.exec(`oc delete namespace ${nameSpace}`, { failOnNonZeroExit: true });
+  },
+);
 
 When('user selects {string} from Project drop down menu', (projectName: string) => {
   initTerminalPage.clickOnProjectDropDawn();

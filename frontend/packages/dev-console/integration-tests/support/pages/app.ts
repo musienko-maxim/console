@@ -6,7 +6,6 @@ import { devNavigationMenu, adminNavigationBar, switchPerspective, pageTitle } f
 import { devNavigationMenuPO, adminNavigationMenuPO, formPO, gitPO, yamlPO } from '../pageObjects';
 import * as yamlView from '../../../../integration-tests-cypress/views/yaml-editor';
 
-
 export const app = {
   waitForDocumentLoad: () => {
     cy.document()
