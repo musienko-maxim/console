@@ -11,7 +11,7 @@ declare global {
 }
 
 const KUBEADMIN_USERNAME = 'kubeadmin';
-const KUBEADMIN_IDP = 'developer';
+const KUBEADMIN_IDP = 'kube:admin';
 
 // any command added below, must be added to global Cypress interface above
 
@@ -33,8 +33,8 @@ Cypress.Commands.add('login', (provider: string, username: string, password: str
     cy.task('log', `  Logging in as ${username || KUBEADMIN_USERNAME}`);
     cy.byLegacyTestID('login').should('be.visible');
     cy.contains(idp)
-    .should('be.visible')
-    .click();
+      .should('be.visible')
+      .click();
     cy.get('#inputUsername').type(username || KUBEADMIN_USERNAME);
     cy.get('#inputPassword').type(password || Cypress.env('BRIDGE_KUBEADMIN_PASSWORD'));
     cy.get(submitButton).click();
