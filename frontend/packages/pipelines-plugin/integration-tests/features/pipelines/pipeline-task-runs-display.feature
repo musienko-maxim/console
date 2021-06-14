@@ -20,10 +20,11 @@ Feature: Display task runs page
 
         @regression @to-do
         Scenario: Options in kebab menu of task runs: P-05-TC02
-            Given user is at pipeline details page with pipeline runs
-             When user clicks on Task Runs tab
+            Given user is at PipelineRuns tab with pipeline runs
+              And user clicks on a Pipeline Run
+              And user clicks on TaskRuns tab
               And user clicks kebab menu of a task run
-             Then user can see kebab menu options Edit labels, Edit annotations, Edit Task Run and Delete Task Run
+             Then user can see kebab menu option Delete TaskRun
 
 
         @regression @to-do
@@ -50,14 +51,14 @@ Feature: Display task runs page
               And user can see Status, Message and Log snippet in "Details" tab
 
 
-        @regression @manual @odc-3991
+        @regression @manual
         Scenario Outline: Task Runs Details page with Workspaces: P-05-TC05
             Given pipeline "<pipeline_name>" is created with "<workspace_name>" workspace
               And pipeline "<pipeline_name>" is executed with workspace type "<workspace_type>"
               And user is at Task Runs tab of pipeline run with all kind of Workspaces
              When user clicks on a task run associated with "<workspace_name>" "<resource>" Resources
              Then user is redirected to Task Run Details tab
-              And user will see "<workspace_type>" label with "<workspace_name>" Workspace "shared-task-storage" mentioned in the "<resource>" Resources section of Task Run Details page
+              And user will see "<workspace_type>" label with "<workspace_name>" Workspace mentioned in the "<resource>" Resources section of Task Run Details page
 
         Examples:
                   | pipeline_name | workspace_type        | workspace_name      | resource            |

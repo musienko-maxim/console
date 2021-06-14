@@ -12,7 +12,7 @@ Given('user is at developer perspective', () => {
   // cy.testA11y('Developer perspective with guider tour modal');
   guidedTour.close();
   nav.sidenav.switcher.shouldHaveText(switchPerspective.Developer);
-  // Bug: 1890678 is created related to Accessibility violation - Until bug fix, below line is commented to execute the scripts in CI
+  // Commenting below line, because it is executing on every test scenario - we will remove this in future releases
   // cy.testA11y('Developer perspective');
 });
 
@@ -20,8 +20,7 @@ Given('user has created namespace starts with {string}', (projectName: string) =
   const d = new Date();
   const timestamp = d.getTime();
   projectNameSpace.selectOrCreateProject(`${projectName}-${timestamp}-ns`);
-  // Bug: 1890678 is created related to Accessibility violation - Until bug fix, below line is commented to execute the scripts in CI
-  // cy.testA11y('Developer perspective display after creating or selecting project');
+  cy.testA11y('Developer perspective display after creating or selecting project');
 });
 
 Given('user has created or selected namespace {string}', (projectName: string) => {

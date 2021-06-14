@@ -1,4 +1,4 @@
-export const cardTitle = '.catalog-tile-pf-title';
+export const cardTitle = '[data-test="title"]';
 
 export const addPagePO = {
   gettingStarted: '[data-test="getting-started"]',
@@ -269,7 +269,7 @@ export const channelPO = {
 };
 
 export const yamlPO = {
-  yamlEditor: '.yaml-editor',
+  yamlEditor: '.react-monaco-editor-container',
 };
 
 export const uploadJarFilePO = {

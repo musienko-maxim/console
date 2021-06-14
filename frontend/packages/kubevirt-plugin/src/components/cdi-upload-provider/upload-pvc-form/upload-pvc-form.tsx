@@ -9,7 +9,6 @@ import { match } from 'react-router';
 import {
   dropdownUnits,
   getAccessModeForProvisioner,
-  provisionerAccessModeMapping,
 } from '@console/internal/components/storage/shared';
 import {
   ButtonBar,
@@ -88,7 +87,8 @@ import {
   CDI_UPLOAD_URL_BUILDER,
 } from '../consts';
 import { uploadErrorType, UploadPVCFormStatus } from './upload-pvc-form-status';
-
+import { BinaryUnit, convertToBytes } from '../../form/size-unit-utils';
+import { getDataVolumeStorageSize } from '../../../selectors/dv/selectors';
 import './upload-pvc-form.scss';
 
 const templatesResource: WatchK8sResource = {
@@ -114,6 +114,13 @@ export const uploadErrorMessage = (t: TFunction) => ({
     </Trans>
   ),
 });
+
+export const getGiBUploadPVCSizeByImage = (sizeInBytes: number) => {
+  const sizeGi = sizeInBytes / 1024 / 1024 / 1024;
+
+  if (sizeGi < 0.5) return 1;
+  return Math.ceil(sizeGi) * 2;
+};
 
 export const UploadPVCForm: React.FC<UploadPVCFormProps> = ({
   onChange,
@@ -148,8 +155,7 @@ export const UploadPVCForm: React.FC<UploadPVCFormProps> = ({
   const defaultSCName = getDefaultStorageClass(storageClasses)?.metadata.name;
   const updatedStorageClass = storageClasses?.find((sc) => sc.metadata.name === storageClassName);
   const provisioner = updatedStorageClass?.provisioner || '';
-  let accessModes: string[] =
-    provisionerAccessModeMapping[provisioner] || getAccessModeForProvisioner(provisioner);
+  let accessModes: string[] = getAccessModeForProvisioner(provisioner);
 
   if (storageClasses?.length === 0 && scConfigMap) {
     accessModes = getDefaultSCAccessModes(scConfigMap).map((am) => am.getValue());
@@ -172,6 +178,12 @@ export const UploadPVCForm: React.FC<UploadPVCFormProps> = ({
       }
     }
   }, [defaultSCName, storageClassName, storageClasses]);
+
+  React.useEffect(() => {
+    const value = getGiBUploadPVCSizeByImage((fileValue as File)?.size);
+    setRequestSizeValue(value?.toString());
+    setRequestSizeUnit(BinaryUnit.Gi);
+  }, [fileValue]);
 
   React.useEffect(() => {
     if (storageClassName) {
@@ -707,6 +719,21 @@ export const UploadPVCPage: React.FC<UploadPVCPageProps> = (props) => {
             }
             errorMessage={errorMessage}
           >
+            {fileValue?.size * 2 > convertToBytes(getDataVolumeStorageSize(dvObj)) && (
+              <Alert variant="warning" isInline title={t('kubevirt-plugin~PVC size warning')}>
+                <p>
+                  {t(
+                    'kubevirt-plugin~PVC size is smaller than double the provided image, Please ensure your PVC size covers the requirements of the uncompressed image and any other space requirements',
+                  )}
+                </p>
+                <p>
+                  <ExternalLink
+                    text={t('kubevirt-plugin~Learn more')}
+                    href="https://docs.openshift.com/container-platform/4.7/virt/virtual_machines/virtual_disks/virt-uploading-local-disk-images-block.html"
+                  />
+                </p>
+              </Alert>
+            )}
             {isFileRejected && (
               <Alert variant="warning" isInline title={t('kubevirt-plugin~File type extension')}>
                 <p>

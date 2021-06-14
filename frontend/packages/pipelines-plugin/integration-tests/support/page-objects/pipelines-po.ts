@@ -29,13 +29,13 @@ export const pipelineBuilderPO = {
     sidePane: {
       dialog: 'div.odc-sidebar',
       displayName: '#task-name',
-      inputResource: 'select[id*="tasks-0-resources-inputs-0-resource-field"]',
+      inputResource: 'select[id*="resources-inputs-0-resource-field"]',
       workSpace: '.odc-task-sidebar__workspace [data-test-id="dropdown-button"] span',
       parameterUrl: '[id$="tasks-0-params-0-value-field"]',
       parameterUrlHelper: '[id$="tasks-0-params-0-value-field-helper"]',
       parameterRevision: '[id$="tasks-0-params-1-value-field"]',
       parameterRevisionHelper: '[id$="tasks-0-params-1-value-field-helper"]',
-      imageName: '#IMAGE',
+      imageName: '#form-input-formData-tasks-0-params-3-value-field',
       script: '#SCRIPT',
       args: '#ARGS-0',
       actions: '[data-test-id="actions-menu-button"]',
@@ -172,9 +172,9 @@ export const pipelineRunDetailsPO = {
   logsTab: '[data-test-id="horizontal-link-Logs"]',
   yamlTab: '[data-test-id$="YAML"]',
   detailsTab: '[data-test-id$="Details"]',
-  taskRunsTab: '[data-test-id="horizontal-link-Task Runs"]',
+  taskRunsTab: '[data-test-id="horizontal-link-TaskRuns"]',
   eventsTab: '[data-test-id$="Events"]',
-  pipelineRunStatus: 'h1 [data-test="status-text"]',
+  pipelineRunStatus: '[data-test="resource-status"]',
   details: {
     pipelineLink: '[data-test-id="git-pipeline-events"]',
     sectionTitle: '[data-test-section-heading="PipelineRun details"]',
@@ -183,6 +183,7 @@ export const pipelineRunDetailsPO = {
     workspacesResources: {
       volumeClaimTemplateResources: '[data-test-id="volumeClaimTemplate-resources-section"]',
       emptyDirectory: '[data-test-id="empty-directory-workspace"]',
+      pvcIcon: '[title="PersistentVolumeClaim"]',
     },
   },
   yaml: {
@@ -224,6 +225,7 @@ export const pipelinesPO = {
     columnValues: '[aria-label="Pipelines"] tbody tr td',
     columnNames: 'div[aria-label="Pipelines"] thead tr th',
     pipelineRunIcon: '[title="PipelineRun"]',
+    lastRunStatus: '[data-test="status-text"]',
   },
   addTrigger: {
     add: '#confirm-action',

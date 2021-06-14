@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import {
   dropdownUnits,
   getAccessModeForProvisioner,
-  provisionerAccessModeMapping,
 } from '@console/internal/components/storage/shared';
 import {
   FieldLevelHelp,
@@ -43,6 +42,7 @@ import { URLSourceHelp } from '../../form/helper/url-source-help';
 import { ProjectDropdown } from '../../form/project-dropdown';
 import { preventDefault } from '../../form/utils';
 import { BOOT_ACTION_TYPE, BootSourceAction, BootSourceState } from './boot-source-form-reducer';
+import { getGiBUploadPVCSizeByImage } from '../../cdi-upload-provider/upload-pvc-form/upload-pvc-form';
 
 type AdvancedSectionProps = {
   state: BootSourceState;
@@ -73,8 +73,7 @@ const AdvancedSection: React.FC<AdvancedSectionProps> = ({
   );
   const storageClassName = updatedStorageClass?.metadata?.name;
   const provisioner = updatedStorageClass?.provisioner || '';
-  let accessModes: string[] =
-    provisionerAccessModeMapping[provisioner] || getAccessModeForProvisioner(provisioner);
+  let accessModes: string[] = getAccessModeForProvisioner(provisioner);
 
   if (!scAllowedLoading && !scAllowed && scConfigMap) {
     accessModes = getDefaultSCAccessModes(scConfigMap).map((am) => am.getValue());
@@ -296,12 +295,16 @@ export const BootSourceForm: React.FC<BootSourceFormProps> = ({
             id="file-upload"
             value={state.file?.value.value}
             filename={state.file?.value.name}
-            onChange={(file: File, name: string) =>
+            onChange={(file: File, name: string) => {
               dispatch({
                 type: BOOT_ACTION_TYPE.SET_FILE,
                 payload: { value: file, name },
-              })
-            }
+              });
+              dispatch({
+                type: BOOT_ACTION_TYPE.SET_PVC_SIZE,
+                payload: getGiBUploadPVCSizeByImage(state.file?.value?.value?.size).toString(),
+              });
+            }}
             hideDefaultPreview
             isRequired
             isDisabled={disabled}
