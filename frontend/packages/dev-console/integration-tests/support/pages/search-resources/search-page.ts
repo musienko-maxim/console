@@ -24,10 +24,8 @@ export const searchResource = {
   searchResourceByNameAsAdmin: (resourceName: string) => {
     // check Home menu is expanded or not
     cy.get(`${adminNavigationMenuPO.home.main}>button`)
-      .should('have.attr', 'aria-expanded')
-      .and('equal', 'false')
-      .then((expanded) => {
-        if (expanded) {
+      .then(($expanded) => {
+        if ($expanded.attr("aria-expanded")?.toString()==='false'){
           navigateToAdminMenu(adminNavigationBar.Home);
         }
       });

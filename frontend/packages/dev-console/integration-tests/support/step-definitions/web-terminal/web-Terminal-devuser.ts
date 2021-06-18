@@ -7,12 +7,12 @@ import { projectNameSpace, perspective } from '../../pages';
 
 import { guidedTour } from '../../../../../integration-tests-cypress/views/guided-tour';
 
-Given('user has logged in as dev user', () => {
+Given('user has logged in as basic user', () => {
   // temporary solution for login as developer user
   cy.logout();
-  cy.login('htpasswd', Cypress.env('DEV_USER_NAME'), Cypress.env('DEV_USER_PASSSWORD'));
-  perspective.switchTo(switchPerspective.Developer);
+  cy.login(Cypress.env('DEV_USER_IDP') || 'developer', Cypress.env('DEV_USER_NAME'), Cypress.env('DEV_USER_PASSSWORD'));
   guidedTour.close();
+  perspective.switchTo(switchPerspective.Developer);
 });
 
 When('user selects Create Project from Project drop down menu', () => {
