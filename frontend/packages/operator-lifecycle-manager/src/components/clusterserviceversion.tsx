@@ -94,11 +94,16 @@ import {
   ClusterServiceVersionKind,
   ClusterServiceVersionPhase,
   CRDDescription,
+  CSVConditionReason,
   InstallPlanKind,
   PackageManifestKind,
   SubscriptionKind,
 } from '../types';
-import { getClusterServiceVersionPlugins, isPluginEnabled } from '../utils';
+import {
+  getClusterServiceVersionPlugins,
+  isPluginEnabled,
+  upgradeRequiresApproval,
+} from '../utils';
 import { consolePluginModal } from './modals/console-plugin-modal';
 import { createUninstallOperatorModal } from './modals/uninstall-operator-modal';
 import { ProvidedAPIsPage, ProvidedAPIPage } from './operand';
@@ -107,7 +112,6 @@ import { CreateInitializationResourceButton } from './operator-install-page';
 import {
   SubscriptionDetails,
   catalogSourceForSubscription,
-  upgradeRequiresApproval,
   UpgradeApprovalLink,
 } from './subscription';
 import { ClusterServiceVersionLogo, referenceForProvidedAPI, providedAPIsForCSV } from './index';
@@ -986,8 +990,25 @@ export const ClusterServiceVersionDetails: React.FC<ClusterServiceVersionDetails
                   isInline
                   className="co-alert"
                   variant="danger"
-                  title={`${status.phase}: ${status.message}`}
-                />
+                  title={t('olm~Operator failed')}
+                >
+                  {status.reason === CSVConditionReason.CSVReasonCopied ? (
+                    <>
+                      {t(
+                        'olm~This Operator was copied from another namespace. For the reason it failed, see ',
+                      )}
+                      <ResourceLink
+                        name={metadata.name}
+                        kind={referenceForModel(ClusterServiceVersionModel)}
+                        namespace={operatorNamespaceFor(props.obj)}
+                        hideIcon
+                        inline
+                      />
+                    </>
+                  ) : (
+                    status.message
+                  )}
+                </Alert>
               )}
               {initializationResource && (
                 <InitializationResourceAlert
