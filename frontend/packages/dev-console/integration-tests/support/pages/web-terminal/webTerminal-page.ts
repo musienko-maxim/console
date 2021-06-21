@@ -1,5 +1,5 @@
-import { webTerminalPO } from '../../pageObjects/webterminal-po';
 import { messages } from '../../constants/webTerminal';
+import { webTerminalPO } from '../../pageObjects/webterminal-po';
 
 export const webTerminalPage = {
   clickOpenCloudShellBtn: () => cy.get(webTerminalPO.openComandLine).click(),

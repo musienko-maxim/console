@@ -1,8 +1,8 @@
 import { Then, And } from 'cypress-cucumber-preprocessor/steps';
-import { searchResource } from '../../pages/search-resources/search-page';
-import { devWorkspacePage } from '../../pages/devworspace/devworkspacePage';
 import { devWorkspaceStatuses } from '../../constants';
 import { projectNameSpace } from '../../pages';
+import { devWorkspacePage } from '../../pages/devworspace/devworkspacePage';
+import { searchResource } from '../../pages/search-resources/search-page';
 
 Then('user will get created DevWorkspace instance in {string} namespace', (a: string) => {
   searchResource.searchResourceByNameAsAdmin('DevWorkspace');

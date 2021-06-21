@@ -1,5 +1,5 @@
-import { adminNavigationBar, devNavigationMenu } from '../../constants';
 import { navigateTo } from '..';
+import { adminNavigationBar, devNavigationMenu } from '../../constants';
 import { adminNavigationMenuPO } from '../../pageObjects';
 import { navigateToAdminMenu } from '../app';
 
@@ -23,12 +23,11 @@ export const searchResource = {
 
   searchResourceByNameAsAdmin: (resourceName: string) => {
     // check Home menu is expanded or not
-    cy.get(`${adminNavigationMenuPO.home.main}>button`)
-      .then(($expanded) => {
-        if ($expanded.attr("aria-expanded")?.toString()==='false'){
-          navigateToAdminMenu(adminNavigationBar.Home);
-        }
-      });
+    cy.get(`${adminNavigationMenuPO.home.main}>button`).then(($expanded) => {
+      if ($expanded.attr('aria-expanded')?.toString() === 'false') {
+        navigateToAdminMenu(adminNavigationBar.Home);
+      }
+    });
     cy.get(adminNavigationMenuPO.home.search).click();
     performResourceSearching(resourceName);
   },
