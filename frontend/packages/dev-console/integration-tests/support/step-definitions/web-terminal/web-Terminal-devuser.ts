@@ -1,19 +1,9 @@
-import { When, Then, Given } from 'cypress-cucumber-preprocessor/steps';
-import { initTerminalPage } from '../../pages/web-terminal/initTerminal-page';
-import { searchResource } from '../../pages/search-resources/search-page';
+import { When, Then } from 'cypress-cucumber-preprocessor/steps';
+import { devWorkspaceStatuses } from '../../constants';
+import { projectNameSpace } from '../../pages';
 import { devWorkspacePage } from '../../pages/devworspace/devworkspacePage';
-import { devWorkspaceStatuses, switchPerspective } from '../../constants';
-import { projectNameSpace, perspective } from '../../pages';
-
-import { guidedTour } from '../../../../../integration-tests-cypress/views/guided-tour';
-
-Given('user has logged in as basic user', () => {
-  // temporary solution for login as developer user
-  cy.logout();
-  cy.login(Cypress.env('DEV_USER_IDP') || 'developer', Cypress.env('DEV_USER_NAME'), Cypress.env('DEV_USER_PASSSWORD'));
-  guidedTour.close();
-  perspective.switchTo(switchPerspective.Developer);
-});
+import { searchResource } from '../../pages/search-resources/search-page';
+import { initTerminalPage } from '../../pages/web-terminal/initTerminal-page';
 
 When('user selects Create Project from Project drop down menu', () => {
   initTerminalPage.clickOnProjectDropDawn();
