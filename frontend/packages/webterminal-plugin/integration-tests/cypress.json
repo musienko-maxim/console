@@ -19,7 +19,7 @@
   "screenshotsFolder": "../../../gui_test_screenshots/cypress/screenshots",
   "videosFolder": "../../../gui_test_screenshots/cypress/videos",
   "env": {
-    "TAGS": "(@web-terminal or @customize-web-terminal) and (@smoke or @regression or @pre-condition) and not (@manual or @to-do or @un-verified or @broken-test)",
+    "TAGS": "(@web-terminal or @regression)",
     "NAMESPACE": "aut-webterminal"
   },
   "retries": {

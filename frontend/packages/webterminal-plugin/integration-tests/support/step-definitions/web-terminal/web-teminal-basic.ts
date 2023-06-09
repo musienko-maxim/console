@@ -1,5 +1,6 @@
-import { When, Then, And } from 'cypress-cucumber-preprocessor/steps';
+import { When, Then, And, Given } from 'cypress-cucumber-preprocessor/steps';
 import { webTerminalPage } from '@console/webterminal-plugin/integration-tests/support/step-definitions/pages/web-terminal/webTerminal-page';
+import { verifyAndInstallWebTerminalOperator } from '../../../../../dev-console/integration-tests/support/pages/functions/installOperatorOnCluster';
 
 When('user clicks on Open Terminal in new tab button on the terminal window', () => {
   webTerminalPage.verifyOpenInNewTabButton();
@@ -23,3 +24,6 @@ Then(
     webTerminalPage.verifyRestartTerminalButton();
   },
 );
+Given('user with basic rights has installed Web Terminal operator', () => {
+  verifyAndInstallWebTerminalOperator();
+});

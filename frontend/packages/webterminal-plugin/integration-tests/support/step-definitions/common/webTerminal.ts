@@ -10,13 +10,13 @@ import { checkTerminalIcon } from '@console/dev-console/integration-tests/suppor
 import { webTerminalPage } from '@console/webterminal-plugin/integration-tests/support/step-definitions/pages/web-terminal/webTerminal-page';
 
 const idp = Cypress.env('BRIDGE_HTPASSWD_IDP') || 'consoledeveloper';
-const username = Cypress.env('BRIDGE_HTPASSWD_USERNAME') || 'consoledeveloper';
-const password = Cypress.env('BRIDGE_HTPASSWD_PASSWORD') || 'developer';
+const username = Cypress.env('CYPRESS_BRIDGE_HTPASSWD_BASIC_USERNAME') || 'consoledeveloper';
+const password = Cypress.env('CYPRESS_BRIDGE_HTPASSWD_PASSWORD') || 'developer';
 const kubeAdmUserName = Cypress.env('KUBEADMIN_NAME') || 'kubeadmin';
 const kubeAdmUserPass = Cypress.env('BRIDGE_KUBEADMIN_PASSWORD');
 
 // create web terminal instance in dedicated namespace  under basic user and relogin as admin with oc client
-function installDevWsAndReconfigureIdlingTimeout(dedicatedNamespace: string) {
+function installDevWsAndWebTerminalForBasicUser(dedicatedNamespace: string) {
   // we need to create an active terminal session in background before test, also
   // we rewrite default idling timeout for the terminal (because 15 min - too long change it to 1 min)
   try {
@@ -29,10 +29,6 @@ function installDevWsAndReconfigureIdlingTimeout(dedicatedNamespace: string) {
     cy.exec(`oc login -u ${kubeAdmUserName}  -p ${kubeAdmUserPass} --insecure-skip-tls-verify`);
     throw err;
   }
-  // override the default idling timeout from 15 minutes to 1 minute
-  cy.exec(
-    'oc apply -f testData/yamls/web-terminal/dev-ws-custom-idling-config.yaml -n openshift-operators',
-  );
 }
 
 Given('user can see terminal icon on masthead', () => {
@@ -62,7 +58,7 @@ Given('user has installed webTerminal in namespace {string}', (namespace: string
         devWsExistingOutput.startsWith('No resources found') ||
         devWsExistingOutput.includes('Forbidden')
       ) {
-        installDevWsAndReconfigureIdlingTimeout(namespace);
+        installDevWsAndWebTerminalForBasicUser(namespace);
       }
     });
 });
